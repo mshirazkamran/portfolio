@@ -12,8 +12,11 @@ const ovo = Ovo({
 });
 
 export const metadata = {
-  title: "Vamsi Indugu | Portfolio",
-  description: "Personal portfolio website showcasing my work and experience",
+  title: "Muhammad Shiraz Kamran | Portfolio",
+  description: "Software Engineering student at COMSATS University specializing in backend development, AI/ML, and full-stack solutions",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }) {
