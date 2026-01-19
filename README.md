@@ -9,17 +9,17 @@
 
 ## 📚 Table of Contents  
 
-- [🎯 Project Overview](#-project-overview)  
-- [💡 Core Highlights](#-core-highlights)  
-- [🛠️ Technologies Used](#-technologies-used)  
-- [📁 Project Structure](#-project-structure)  
-- [🚀 Getting Started](#-getting-started)  
-  - [📋 Installation](#-installation)  
-  - [📦 Dependencies](#-dependencies)  
-  - [❓ Troubleshooting](#-troubleshooting)  
-- [🤝 Contributing](#-contributing)  
-- [📘 Lessons Learned](#-lessons-learned)  
-- [📫 Contact](#-contact)  
+- [Project Overview](#-project-overview)  
+- [Core Highlights](#-core-highlights)  
+- [Technologies Used](#-technologies-used)  
+- [Project Structure](#-project-structure)  
+- [Getting Started](#-getting-started)  
+  - [Installation](#-installation)  
+  - [Dependencies](#-dependencies)  
+  - [Troubleshooting](#-troubleshooting)  
+- [Contributing](#-contributing)  
+- [Lessons Learned](#-lessons-learned)  
+- [Contact](#-contact)  
 
 ---
 
@@ -35,12 +35,12 @@ This is my personal developer portfolio, designed to highlight my **technical sk
 
 Here’s what makes this portfolio stand out:
 
-- ✨ **Smooth Animations**: Page transitions and scroll-based animations powered by Framer Motion for a lively experience.  
-- 🌒 **Dark Mode**: Fully implemented using Tailwind’s dark mode utilities.  
-- 🔍 **SEO Optimized**: Meta tags, structured data, and Open Graph implementation.  
-- ⚙️ **SSG Architecture**: Uses Next.js static site generation for ultra-fast load times.  
-- 📷 **Lazy Loading**: Enhances page performance for media-heavy sections.  
-- 🧠 **Intersection Observer API**: Triggers animations only when sections are visible.
+-  **Smooth Animations**: Page transitions and scroll-based animations powered by Framer Motion for a lively experience.  
+-  **Dark Mode**: Fully implemented using Tailwind’s dark mode utilities.  
+-  **SEO Optimized**: Meta tags, structured data, and Open Graph implementation.  
+-  **SSG Architecture**: Uses Next.js static site generation for ultra-fast load times.  
+-  **Lazy Loading**: Enhances page performance for media-heavy sections.  
+-  **Intersection Observer API**: Triggers animations only when sections are visible.
 
 ---
 
