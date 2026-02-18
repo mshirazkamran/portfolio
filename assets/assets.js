@@ -140,7 +140,7 @@ export const educationData = [
         degree: 'Bachelor of Science in Software Engineering',
         institution: 'COMSATS University Islamabad',
         duration: '2023 - 2027',
-        description: 'CGPA: 3.58/4.0 - Focused on learning software knowledge about algorithms, databases, and system architecture.',
+        description: 'CGPA: 3.62/4.0 - Focused on learning software knowledge about algorithms, databases, and system architecture.',
         highlights: ['Database Systems', 'Object-Oriented Programming', 'Data Structures & Algorithms', 'Design and Analysis of Algorithms', 'Computer Networks', 'Software Design and Architecture']
     }
 ];
