@@ -106,7 +106,7 @@ export const workData = [
         title: 'Hadith Semantic Search',
         description: 'Python, FastAPI, PostgreSQL, React',
         bgImage: '/hadith-search-1.jpg',
-        link: 'https://github.com/mshirazkamran/ahadith-vectors',
+        link: 'https://thehadith.netlify.app',
     },
     {
         title: 'Filebin CLI',
