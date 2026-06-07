@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 // import Services from "./components/Services";
 import Work from "./components/Work";
+import CursorFollower from "./components/CursorFollower";
 
 export default function Home() {
 
@@ -35,6 +36,7 @@ export default function Home() {
 
   return (
     <>
+      <CursorFollower />
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       <Header isDarkMode={isDarkMode} />
       <About isDarkMode={isDarkMode} />

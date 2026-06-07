@@ -1,14 +1,16 @@
-import { Outfit, Ovo } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const outfit = Outfit({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
-const ovo = Ovo({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
 });
 
 export const metadata = {
@@ -21,9 +23,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth ">
+    <html lang="en" className="scroll-smooth dark">
       <body
-        className={`${outfit.className} ${ovo.className} antialiased dark:bg-darkTheme dark:text-white`}
+        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-canvas text-ink font-sans`}
       >
         {children}
       </body>

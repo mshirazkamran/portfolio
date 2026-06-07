@@ -1,83 +1,179 @@
+'use client'
 
 import { assets } from '@/assets/assets'
 import Image from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Navbar = ({ isDarkMode, setIsDarkMode }) => {
-
     const [isScroll, setIsScroll] = useState(false)
-
-    const sideMenuRef = useRef();
-
-    const openMenu = () => {
-
-        sideMenuRef.current.style.transform = 'translateX(-16rem)'
-    }
-
-    const closeMenu = () => {
-
-        sideMenuRef.current.style.transform = 'translateX(16rem)'
-    }
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     useEffect(() => {
-        window.addEventListener('scroll', () => {
-            if (scrollY > 50) {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
                 setIsScroll(true)
             } else {
                 setIsScroll(false)
             }
-
-        })
-
+        }
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
     return (
         <>
+            <nav className={`w-full fixed top-0 left-0 right-0 z-50 h-16 border-b transition-all duration-300 ${
+                isScroll 
+                ? "bg-canvas/80 backdrop-blur-md border-hairline shadow-lg shadow-black/10" 
+                : "bg-transparent border-transparent"
+            }`}>
+                <div className='max-w-7xl mx-auto h-full flex items-center justify-between px-6 md:px-12'>
+                    
+                    {/* Logo */}
+                    <a href="#top" className="flex items-center gap-2 group">
+                        <Image 
+                            src={assets.logo_dark} 
+                            alt="Shiraz Logo" 
+                            className='h-7 w-auto object-contain opacity-95 group-hover:opacity-100 transition' 
+                            width={140} 
+                            height={28} 
+                            priority 
+                        />
+                    </a>
 
-            <div className='fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden'>
-                <Image src={assets.header_bg_color} alt='' className='w-full' />
-            </div>
+                    {/* Nav Links (Desktop) */}
+                    <ul className='hidden md:flex items-center gap-1.5 bg-canvas-soft/70 border border-hairline rounded-full px-4 py-1.5 backdrop-blur-sm shadow-inner shadow-black/20'>
+                        <li>
+                            <a className='font-mono text-xs tracking-wider text-body px-3 py-1.5 rounded-full hover:text-accent hover:bg-canvas-soft-2/50 transition-all duration-200' href="#top">
+                                HOME
+                            </a>
+                        </li>
+                        <li>
+                            <a className='font-mono text-xs tracking-wider text-body px-3 py-1.5 rounded-full hover:text-accent hover:bg-canvas-soft-2/50 transition-all duration-200' href="#about">
+                                ABOUT
+                            </a>
+                        </li>
+                        <li>
+                            <a className='font-mono text-xs tracking-wider text-body px-3 py-1.5 rounded-full hover:text-accent hover:bg-canvas-soft-2/50 transition-all duration-200' href="#work">
+                                WORK
+                            </a>
+                        </li>
+                        <li>
+                            <a className='font-mono text-xs tracking-wider text-body px-3 py-1.5 rounded-full hover:text-accent hover:bg-canvas-soft-2/50 transition-all duration-200' href="#contact">
+                                CONTACT
+                            </a>
+                        </li>
+                    </ul>
 
-            <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 ${isScroll ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-mywhite/2" : ""}`}>
+                    {/* Right CTA */}
+                    <div className='flex items-center gap-3'>
 
-                <a href="#top">
-                    <Image src={assets.logo_dark} alt="Shiraz Logo" className='h-10 w-auto cursor-pointer mr-14' width={200} height={40} priority />
-                </a>
 
-                <ul className={`hidden md:flex items-center gap-8 lg:gap-12 rounded-full px-16 py-3 ${isScroll ? "" : " bg-white shadow-sm bg-opacity-50 dark border dark:border-white/50 dark:bg-transparent "}`}>
-                    <li><a className='font-Outfit text-lg relative navbar-link' href="#top" >Home</a></li>
-                    <li><a className='font-Outfit text-lg relative navbar-link' href="#about" >About me</a></li>
-                    <li><a className='font-Outfit text-lg relative navbar-link' href="#work" >My&nbsp;Work</a></li>
-                    <li><a className='font-Outfit text-lg relative navbar-link' href="#contact" >Contact me</a></li>
-                </ul>
+                        {/* LinkedIn Connect Button */}
+                        <a 
+                            href="https://www.linkedin.com/in/mshirazkamran/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className='hidden sm:flex items-center gap-1.5 px-4.5 py-1.8 bg-accent text-on-primary border border-accent hover:bg-yellow-500 hover:border-yellow-500 rounded-full font-mono text-[11px] tracking-wider font-bold transition-all duration-200 shadow-[0_0_15px_rgba(250,204,21,0.15)] hover:shadow-[0_0_20px_rgba(250,204,21,0.35)]'
+                        >
+                            CONNECT
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
 
-                <div className='flex items-center gap-4'>
-                    <button onClick={() => setIsDarkMode(prev => !prev)} >
-                        <Image src={isDarkMode ? assets.sun_icon : assets.moon_icon} alt="" className='mr-4 w-6' />
-                    </button>
-
-                    <a href="https://www.linkedin.com/in/mshirazkamran/" target="_blank" className='flex items-center gap-2 px-8 py-2.5 border-2 border-gray-500 rounded-full font-Outfit text-lg dark:border-white/50'>Connect<Image src={isDarkMode ? assets.arrow_icon_dark : assets.arrow_icon} alt="" className='w-3' /></a>
-
-                    <button className='block md:hidden ml-3' onClick={openMenu}>
-                        <Image src={isDarkMode ? assets.menu_white : assets.menu_black} alt="" className='w-6' />
-                    </button>
+                        {/* Mobile Menu Toggle */}
+                        <button 
+                            className='block md:hidden p-2 rounded-full border border-hairline hover:bg-canvas-soft text-body hover:text-ink' 
+                            onClick={() => setIsMenuOpen(true)}
+                            aria-label="Open Menu"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+            </nav>
 
-                {/*-------------- mobile menu ----------------------*/}
-                <ul ref={sideMenuRef} className='flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 dark:bg-darkHover dark:text-white'>
+            {/* Mobile Menu Panel */}
+            <div className={`fixed inset-0 z-50 bg-canvas/98 backdrop-blur-xl transition-all duration-300 flex flex-col justify-between p-8 ${
+                    isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                }`}>
+                    <div>
+                        <div className='flex items-center justify-between mb-16'>
+                            <Image 
+                                src={assets.logo_dark} 
+                                alt="Shiraz Logo" 
+                                className='h-6 w-auto opacity-95' 
+                                width={120} 
+                                height={24} 
+                            />
+                            <button 
+                                className='p-2 rounded-full border border-hairline hover:bg-canvas-soft text-body hover:text-ink' 
+                                onClick={() => setIsMenuOpen(false)}
+                                aria-label="Close Menu"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
 
-                    <div className='absolute right-6 top-6' onClick={closeMenu}>
-                        <Image src={isDarkMode ? assets.close_white : assets.close_black} alt='' className='w-5 cursor-pointer' />
+                        <ul className='flex flex-col gap-6 text-left pl-4'>
+                            <li>
+                                <a 
+                                    className='font-mono text-xl tracking-wider text-body hover:text-accent transition' 
+                                    onClick={() => setIsMenuOpen(false)} 
+                                    href="#top"
+                                >
+                                    01 / HOME
+                                </a>
+                            </li>
+                            <li>
+                                <a 
+                                    className='font-mono text-xl tracking-wider text-body hover:text-accent transition' 
+                                    onClick={() => setIsMenuOpen(false)} 
+                                    href="#about"
+                                >
+                                    02 / ABOUT
+                                </a>
+                            </li>
+                            <li>
+                                <a 
+                                    className='font-mono text-xl tracking-wider text-body hover:text-accent transition' 
+                                    onClick={() => setIsMenuOpen(false)} 
+                                    href="#work"
+                                >
+                                    03 / WORK
+                                </a>
+                            </li>
+                            <li>
+                                <a 
+                                    className='font-mono text-xl tracking-wider text-body hover:text-accent transition' 
+                                    onClick={() => setIsMenuOpen(false)} 
+                                    href="#contact"
+                                >
+                                    04 / CONTACT
+                                </a>
+                            </li>
+                        </ul>
                     </div>
 
-
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#top" >Home</a></li>
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#about" >About me</a></li>
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#work" >My Work</a></li>
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#contact" >Contact me</a></li>
-                </ul>
-
-            </nav>
+                    <div className="flex flex-col gap-4">
+                        <a 
+                            href="https://www.linkedin.com/in/mshirazkamran/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className='w-full text-center py-3 bg-accent text-on-primary hover:bg-yellow-500 font-mono text-xs tracking-widest font-bold rounded-lg transition-all duration-200 shadow-[0_0_15px_rgba(250,204,21,0.2)]'
+                        >
+                            CONNECT ON LINKEDIN
+                        </a>
+                        <p className="text-center text-[10px] font-mono text-mute">
+                            © 2026 MUHAMMAD SHIRAZ KAMRAN.
+                        </p>
+                    </div>
+                </div>
         </>
     )
 }

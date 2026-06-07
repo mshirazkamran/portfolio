@@ -103,22 +103,57 @@ export const assets = {
 
 export const workData = [
     {
+        title: 'Mushaf Konnekt',
+        description: 'Flutter, FastAPI, PostgreSQL, SQLite, OAuth2/OIDC, VPS',
+        bgImage: '/mushaf-konnekt-1.png',
+        link: 'https://mushafkonnekt.netlify.app/',
+        github: 'https://github.com/mshirazkamran/mushaf-konnekt-core',
+        fullDetails: [
+            'Developed an offline first Quran app as a solo project using Flutter and a FastAPI backend, integrating the Quran Foundation Content APIs and User APIs for Quranic content, authentication, bookmarks, collections, and notes.',
+            'Designed the caching and synchronization system using SQLite and PostgreSQL, allowing users to access Quran data, translations, and saved content offline.',
+            'Implemented authentication using OAuth2/OIDC with PKCE enabling live synchronization of user bookmarks, collections, and reflective notes.',
+            'Integrated on-device Quran recitation recognition using fine tuned tiny whisper (Tarteel) on Sherpa ONNX runtime and background Dart Isolates, keeping the UI responsive during real-time speech processing and verse matching.',
+            'Used Riverpod for state management to handle themes, reader settings, persistent navigation state, and reactive UI updates across the application.'
+        ]
+    },
+    {
         title: 'Hadith Semantic Search',
-        description: 'Python, FastAPI, PostgreSQL, React',
+        description: 'Python, FastAPI, PostgreSQL, React, SentenceTransformers',
         bgImage: '/hadith-search-1.jpg',
         link: 'https://thehadith.netlify.app',
+        github: 'https://github.com/mshirazkamran/',
+        fullDetails: [
+            'Built a high-performance semantic search engine for Hadith databases using SentenceTransformers and custom embeddings.',
+            'Developed a FastAPI backend to handle high-concurrency requests, querying vectorized data in PostgreSQL.',
+            'Designed a responsive React interface for querying, reading, and exploring related narrations.',
+            'Optimized data pipeline and indexing for fast sub-second text matches across thousands of narrations.'
+        ]
     },
     {
         title: 'Filebin CLI',
-        description: 'Python click, Fastify, Supabase',
+        description: 'Python click, Fastify, Supabase, PostgreSQL',
         bgImage: '/filebin-cli-1.png',
         link: 'https://github.com/mshirazkamran/filebin-api',
+        github: 'https://github.com/mshirazkamran/filebin-api',
+        fullDetails: [
+            'Created a command-line interface tool in Python Click for instant file sharing and server uploads.',
+            'Built a lightweight, high-speed Fastify backend using Node.js to manage file chunk uploads and metadata.',
+            'Integrated Supabase and PostgreSQL for persistent file storage, user profiles, and security keys.',
+            'Implemented secure, expiring share links, chunked uploads, and CLI progress bars for developer convenience.'
+        ]
     },
     {
         title: 'Munch & Vibes',
-        description: 'React, React Router',
+        description: 'React, Tailwind CSS, React Router',
         bgImage: '/munch-1.png',
         link: 'https://munchvibes.netlify.app',
+        github: 'https://github.com/mshirazkamran/',
+        fullDetails: [
+            'Designed and developed a premium restaurant exploration and reservations dashboard.',
+            'Leveraged React Router for seamless single-page application transitions and fluid client-side states.',
+            'Crafted a high-fidelity visual design focusing on vibrant elements, filtering systems, and menu showcases.',
+            'Optimized client-side rendering performance and page responsiveness across mobile and tablet form factors.'
+        ]
     },
 ]
 
