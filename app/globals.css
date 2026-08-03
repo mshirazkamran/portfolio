@@ -1,44 +1,55 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-jetbrains-mono), SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @theme {
-  /* Premium Dark Greyish-Blue Theme Palette */
-  --color-canvas: #070a13;
-  --color-canvas-soft: #0e1626;
-  --color-canvas-soft-2: #1e293b;
-  --color-hairline: #1e293b;
-  --color-hairline-strong: #334155;
+  --grid-template-columns-auto: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+:root {
+  --color-canvas: #f4f5f8;
+  --color-canvas-soft: #fafafc;
+  --color-canvas-soft-2: #eaeef4;
+  --color-hairline: #e2e8f0;
+  --color-hairline-strong: #cbd5e1;
+  --color-ink: #0f172a;
+  --color-body: #475569;
+  --color-mute: #64748b;
+  --color-primary: #f59e0b;
+  --color-on-primary: #ffffff;
+  --color-accent: #d97706;
+}
+
+.dark {
+  --color-canvas: #08090d;
+  --color-canvas-soft: #11131e;
+  --color-canvas-soft-2: #191c2b;
+  --color-hairline: #1e2436;
+  --color-hairline-strong: #2e3650;
   --color-ink: #f8fafc;
   --color-body: #94a3b8;
   --color-mute: #64748b;
   --color-primary: #fbbf24;
   --color-on-primary: #070a13;
   --color-accent: #fbbf24;
-
-  /* Brand gradients adapted for high-contrast yellow and slate theme */
-  --color-dev-start: #fbbf24;
-  --color-dev-end: #3b82f6;
-  --color-prev-start: #3b82f6;
-  --color-prev-end: #8b5cf6;
-  --color-ship-start: #8b5cf6;
-  --color-ship-end: #fbbf24;
-
-  /* Grid layout template auto-fit */
-  --grid-template-columns-auto: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 /* Reset and base element styles */
 @layer base {
-  html, body {
+
+  html,
+  body {
     background-color: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-sans);
     scroll-behavior: smooth;
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   ::selection {
@@ -49,14 +60,18 @@
 
 /* Custom animations for mesh gradient background */
 @keyframes mesh-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(0px, 0px) scale(1);
   }
+
   33% {
-    transform: translate(30px, -50px) scale(1.1);
+    transform: translate(30px, -40px) scale(1.08);
   }
+
   66% {
-    transform: translate(-20px, 20px) scale(0.95);
+    transform: translate(-20px, 20px) scale(0.96);
   }
 }
 
@@ -73,6 +88,39 @@
   animation-delay: 2s;
 }
 
+/* Keyframes for star movement animation */
+@keyframes star-movement-bottom {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-100%, 0%);
+    opacity: 0;
+  }
+}
+
+@keyframes star-movement-top {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(100%, 0%);
+    opacity: 0;
+  }
+}
+
+.animate-star-movement-bottom {
+  animation: star-movement-bottom linear infinite alternate;
+}
+
+.animate-star-movement-top {
+  animation: star-movement-top linear infinite alternate;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -80,14 +128,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: var(--color-canvas);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f1f1f;
+  background: var(--color-hairline-strong);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #333333;
+  background: var(--color-accent);
 }

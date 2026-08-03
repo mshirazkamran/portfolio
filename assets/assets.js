@@ -165,7 +165,7 @@ export const workData = [
 // ]
 
 export const infoList = [
-    { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'B.S. in Software Engineering, COMSATS University Islamabad (CGPA: 3.58/4.0)' },
+    { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'B.S. in Software Engineering, COMSATS University Islamabad (CGPA: 3.56/4.0)' },
     { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'Python, Java, JavaScript, SQL (PostgreSQL, SQLite), HTML/CSS' },
     { icon: assets.project_icon, iconDark: assets.project_icon_dark, title: 'Projects', description: 'Semantic Search Engine, CLI Tools, AI Assistants, E-Commerce Sites' }
 ];
@@ -175,7 +175,7 @@ export const educationData = [
         degree: 'Bachelor of Science in Software Engineering',
         institution: 'COMSATS University Islamabad',
         duration: '2023 - 2027',
-        description: 'CGPA: 3.62/4.0 - Focused on learning software knowledge about algorithms, databases, and system architecture.',
+        description: 'CGPA: 3.56/4.0 - Focused on learning software knowledge about algorithms, databases, and system architecture.',
         highlights: ['Database Systems', 'Object-Oriented Programming', 'Data Structures & Algorithms', 'Design and Analysis of Algorithms', 'Computer Networks', 'Software Design and Architecture']
     }
 ];

@@ -1,21 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'motion/react'
 
 const CursorFollower = () => {
   const [isVisible, setIsVisible] = useState(false)
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
 
-  // Spring physical configuration for a responsive yet smooth lag effect
   const springConfig = { damping: 25, stiffness: 250, mass: 0.5 }
   const cursorXSpring = useSpring(cursorX, springConfig)
   const cursorYSpring = useSpring(cursorY, springConfig)
 
   useEffect(() => {
     const moveCursor = (e) => {
-      // Center the 12px (w-3 h-3) dot on the cursor coordinate
       cursorX.set(e.clientX - 6)
       cursorY.set(e.clientY - 6)
       if (!isVisible) {
@@ -44,7 +42,7 @@ const CursorFollower = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-3 h-3 bg-accent rounded-full pointer-events-none z-50 hidden md:block shadow-[0_0_10px_rgba(250,204,21,0.8)]"
+      className="fixed top-0 left-0 w-3 h-3 bg-amber-500 rounded-full pointer-events-none z-30 hidden md:block shadow-[0_0_10px_rgba(245,158,11,0.8)]"
       style={{
         x: cursorXSpring,
         y: cursorYSpring,

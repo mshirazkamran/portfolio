@@ -1,69 +1,52 @@
 'use client'
 
-import { assets } from '@/assets/assets'
-import Image from 'next/image'
 import React from 'react'
+import Magnet from './react-bits/Magnet'
 
-const Footer = () => {
+import Image from 'next/image'
+import logoWritten from '@/assets/shiraz-logo-written.png'
+import logoWrittenDark from '@/assets/shiraz-logo-written-dark.png'
+
+const Footer = ({ isDarkMode }) => {
   return (
-    <footer className='w-full border-t border-hairline bg-canvas text-ink py-12 px-6 md:px-12 mt-20 relative z-10'>
-      <div className='max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 pb-8'>
+    <footer className="w-full border-t border-slate-200 dark:border-zinc-800/80 bg-white/60 dark:bg-zinc-950/60 transition-colors duration-400 py-10 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         
-        {/* Logo and Brand */}
-        <div className='flex flex-col items-center md:items-start gap-2'>
-          <Image 
-            src={assets.logo_dark} 
-            alt='logo' 
-            className='h-7 w-auto brightness-0 invert opacity-80' 
-            width={140} 
-            height={28}
-          />
-          <p className="text-[11px] font-mono text-mute">
-            Programming part time and fighting with Bugs full time (:
+        {/* Brand & Copyright */}
+        <div className="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
+          <a href="#home" className="flex items-center group select-none">
+            <Image
+              src={logoWrittenDark}
+              alt="Shiraz Logo"
+              height={28}
+              className="h-7 w-auto object-contain dark:hidden transition-transform group-hover:scale-105 duration-200"
+            />
+            <Image
+              src={logoWritten}
+              alt="Shiraz Logo"
+              height={28}
+              className="h-7 w-auto object-contain hidden dark:block transition-transform group-hover:scale-105 duration-200"
+            />
+          </a>
+          <span className="hidden sm:inline text-slate-300 dark:text-zinc-700">•</span>
+          <p className="text-xs font-mono text-slate-500 dark:text-zinc-500">
+            © 2026 MUHAMMAD SHIRAZ KAMRAN. ALL RIGHTS RESERVED.
           </p>
         </div>
 
-        {/* Contact Email Link */}
-        <a
-          href="mailto:mshirazkamran@gmail.com"
-          className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-hairline bg-canvas-soft/60 text-body hover:text-accent hover:border-accent/40 transition duration-200 font-mono text-xs"
-        >
-          <svg className="w-3.5 h-3.5 text-mute group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 00-2 2z" />
-          </svg>
-          mshirazkamran@gmail.com
-        </a>
+        {/* Back to top CTA */}
+        <Magnet padding={40} magnetStrength={2.5}>
+          <a
+            href="#home"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-full font-mono text-[11px] font-semibold text-slate-700 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-amber-400 hover:border-amber-500/40 transition-colors shadow-sm cursor-pointer"
+          >
+            BACK TO TOP
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </a>
+        </Magnet>
 
-      </div>
-
-      {/* Bottom Sub-footer */}
-      <div className='max-w-7xl mx-auto pt-8 border-t border-hairline/60 flex flex-col-reverse sm:flex-row items-center justify-between gap-4'>
-        <p className='text-[11px] text-mute font-mono tracking-tight'>
-          © 2026 MUHAMMAD SHIRAZ KAMRAN. ALL RIGHTS RESERVED.
-        </p>
-        
-        <ul className='flex items-center gap-6 font-mono text-[11px] text-body'>
-          <li>
-            <a 
-              target='_blank' 
-              rel="noopener noreferrer"
-              href='https://www.linkedin.com/in/mshirazkamran/' 
-              className="hover:text-accent transition"
-            >
-              LINKEDIN
-            </a>
-          </li>
-          <li>
-            <a 
-              target='_blank' 
-              rel="noopener noreferrer"
-              href='https://github.com/mshirazkamran/' 
-              className="hover:text-accent transition"
-            >
-              GITHUB
-            </a>
-          </li>
-        </ul>
       </div>
     </footer>
   )

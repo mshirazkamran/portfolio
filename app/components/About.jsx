@@ -1,193 +1,259 @@
 'use client'
 
-import { assets, educationData, experienceData, toolsData } from '@/assets/assets'
+import { educationData, experienceData, toolsData } from '@/assets/assets'
 import Image from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useState } from 'react'
+import { motion } from 'motion/react'
+import SpotlightCard from './react-bits/SpotlightCard'
+import CountUp from './react-bits/CountUp'
+import ClickSpark from './react-bits/ClickSpark'
 
-const About = () => {
-  // Common animation variants
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 }
-  }
+const About = ({ isDarkMode }) => {
+  const [activeCategory, setActiveCategory] = useState('ALL');
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05
-      }
-    }
-  }
+  const toolCategories = [
+    { id: 'ALL', label: 'ALL TOOLS' },
+    { id: 'LANG', label: 'LANGUAGES' },
+    { id: 'BACKEND', label: 'BACKEND & AI' },
+    { id: 'DB', label: 'DATABASES' },
+    { id: 'CLOUD', label: 'DEVOPS & CLOUD' }
+  ];
 
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      scale: 1,
-      transition: { type: 'spring', stiffness: 300, damping: 24 }
-    }
-  }
+  const getToolCategory = (name) => {
+    if (['Java', 'Python', 'JavaScript'].includes(name)) return 'LANG';
+    if (['Node.js', 'React', 'FastAPI', 'Fastify', 'SentenceTransformers'].includes(name)) return 'BACKEND';
+    if (['SQL', 'PostgreSQL', 'Supabase'].includes(name)) return 'DB';
+    return 'CLOUD';
+  };
+
+  const filteredTools = activeCategory === 'ALL'
+    ? toolsData
+    : toolsData.filter(t => getToolCategory(t.name) === activeCategory);
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={containerVariants}
-      id='about' 
-      className='w-full max-w-7xl mx-auto px-6 md:px-12 py-24 scroll-mt-16 bg-canvas text-ink'
-    >
-      {/* Eyebrow & Title */}
-      <div className="mb-16 text-center md:text-left">
-        <motion.p
-          variants={fadeInUp}
-          transition={{ duration: 0.5 }}
-          className='font-mono text-xs tracking-wider text-accent font-semibold uppercase mb-3'
-        >
-          01 / MY JOURNEY
-        </motion.p>
-        <motion.h2
-          variants={fadeInUp}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className='text-3xl md:text-5xl font-extrabold tracking-[-0.03em] text-ink'
-        >
-          Education & volunteering.
-        </motion.h2>
-      </div>
-
-      {/* Grid: Education & Volunteering */}
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20'>
-        
-        {/* Education Card */}
-        <motion.div
-          variants={fadeInUp}
-          transition={{ duration: 0.6 }}
-          className='bg-canvas-soft border border-hairline hover:border-accent/30 rounded-xl p-8 relative overflow-hidden group shadow-lg shadow-black/10 transition-all duration-300'
-        >
-          
-          <div className='flex items-center gap-3 mb-6'>
-            <svg className='w-5 h-5 text-body group-hover:text-accent transition-colors' fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-            </svg>
-            <h3 className='font-mono text-xs tracking-widest text-body uppercase font-semibold'>EDUCATION</h3>
-          </div>
-
-          <div className='space-y-6'>
-            {educationData.map((edu, index) => (
-              <div key={index} className='border-b border-hairline last:border-0 pb-6 last:pb-0'>
-                <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-2'>
-                  <div>
-                    <h4 className='text-lg font-bold text-ink leading-snug'>{edu.degree}</h4>
-                    <p className='text-sm text-body font-medium'>{edu.institution}</p>
-                  </div>
-                  <span className='font-mono text-[11px] text-body bg-canvas-soft-2 border border-hairline px-2 py-0.5 rounded h-max w-max mt-1 sm:mt-0'>{edu.duration}</span>
-                </div>
-                <p className='text-sm text-body mb-4 leading-relaxed font-sans'>{edu.description}</p>
-                <div className='flex flex-wrap gap-1.5'>
-                  {edu.highlights.map((highlight, idx) => (
-                    <span key={idx} className='px-2.5 py-1 bg-canvas-soft-2 border border-hairline/80 text-body rounded text-[11px] font-mono tracking-tight'>
-                      {highlight}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Volunteering Card */}
-        <motion.div
-          variants={fadeInUp}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className='bg-canvas-soft border border-hairline hover:border-accent/30 rounded-xl p-8 relative overflow-hidden group shadow-lg shadow-black/10 transition-all duration-300'
-        >
-
-          <div className='flex items-center gap-3 mb-6'>
-            <svg className='w-5 h-5 text-body group-hover:text-accent transition-colors' fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <h3 className='font-mono text-xs tracking-widest text-body uppercase font-semibold'>VOLUNTEERING</h3>
-          </div>
-
-          <div className='space-y-6'>
-            {experienceData.map((exp, index) => (
-              <div key={index} className='border-b border-hairline last:border-0 pb-6 last:pb-0'>
-                <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-2'>
-                  <div>
-                    <h4 className='text-lg font-bold text-ink leading-snug'>{exp.role}</h4>
-                    <p className='text-sm text-body font-medium'>{exp.company}</p>
-                  </div>
-                  <span className='font-mono text-[11px] text-body bg-canvas-soft-2 border border-hairline px-2 py-0.5 rounded h-max w-max mt-1 sm:mt-0'>{exp.duration}</span>
-                </div>
-                <p className='text-sm text-body mb-4 leading-relaxed font-sans'>{exp.description}</p>
-                <div className='flex flex-wrap gap-1.5'>
-                  {exp.skills.map((skill, idx) => (
-                    <span key={idx} className='px-2.5 py-1 bg-canvas-soft-2 border border-hairline/80 text-body rounded text-[11px] font-mono tracking-tight'>
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Tools Section */}
-      <div className='mt-24 border-t border-hairline pt-16'>
-        <div className="mb-12 text-center">
+    <ClickSpark sparkColor="#f59e0b" sparkSize={8} sparkRadius={16} sparkCount={6}>
+      <div
+        id='about'
+        className='w-full max-w-7xl mx-auto px-6 md:px-12 py-20 sm:py-28 scroll-mt-16 text-slate-900 dark:text-zinc-100 transition-colors duration-400'
+      >
+        {/* Eyebrow & Title */}
+        <div className="mb-16 text-center md:text-left">
           <motion.p
-            variants={fadeInUp}
-            className='font-mono text-xs tracking-wider text-accent font-semibold uppercase mb-3'
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className='font-mono text-sm sm:text-base tracking-widest text-amber-600 dark:text-amber-400 font-bold uppercase mb-3'
           >
-            02 / TECH STACK
+            01 / MY JOURNEY
           </motion.p>
-          <motion.h3
-            variants={fadeInUp}
-            className='text-2xl md:text-3xl font-extrabold tracking-[-0.02em] text-ink'
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className='text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-zinc-100 font-sans'
           >
-            Tools & technologies.
-          </motion.h3>
+            Education, leadership & tech stack.
+          </motion.h2>
         </div>
 
-        <motion.div 
-          variants={containerVariants}
-          className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-5xl mx-auto'
-        >
-          {toolsData.map((tool, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{ 
-                scale: 1.03, 
-                borderColor: 'var(--color-accent)', 
-                backgroundColor: 'var(--color-canvas-soft-2)',
-                transition: { type: 'spring', stiffness: 400, damping: 15 } 
-              }}
-              whileTap={{ scale: 0.98 }}
-              className='px-4.5 py-3.5 bg-canvas-soft border border-hairline rounded-lg shadow-sm cursor-pointer transition-colors duration-200 flex items-center gap-3.5 group'
-            >
-              <div className="relative w-7 h-7 flex items-center justify-center overflow-hidden">
-                <Image 
-                  src={tool.logo} 
-                  alt={tool.name} 
-                  fill 
-                  sizes="28px" 
-                  className='object-contain opacity-100' 
-                />
-              </div>
-              <span className='font-mono text-xs tracking-tight font-medium text-body group-hover:text-ink transition-colors duration-200'>
-                {tool.name}
+        {/* Metrics Banner with CountUp */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
+          <SpotlightCard
+            spotlightColor={isDarkMode ? "rgba(251, 191, 36, 0.14)" : "rgba(217, 119, 6, 0.1)"}
+            className="p-6 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200 dark:border-zinc-800 shadow-sm"
+          >
+            <div className="flex flex-col">
+              <span className="font-mono text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-2">
+                COMMUNITY IMPACT
               </span>
-            </motion.div>
-          ))}
-        </motion.div>
+              <div className="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 dark:text-zinc-100 flex items-baseline gap-1">
+                <CountUp to={350} duration={2} suffix="K+" prefix="" />
+                <span className="text-sm font-sans text-slate-500 dark:text-zinc-400 font-normal">PKR Raised</span>
+              </div>
+              <p className="text-xs text-slate-600 dark:text-zinc-400 mt-2">
+                Co-led Gaza Relief fundraising campaign team of 5 students.
+              </p>
+            </div>
+          </SpotlightCard>
+
+          <SpotlightCard
+            spotlightColor={isDarkMode ? "rgba(251, 191, 36, 0.14)" : "rgba(217, 119, 6, 0.1)"}
+            className="p-6 rounded-2xl bg-white dark:bg-zinc-900/70 border border-slate-200 dark:border-zinc-800 shadow-sm"
+          >
+            <div className="flex flex-col">
+              <span className="font-mono text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-2">
+                TECHNICAL VERSATILITY
+              </span>
+              <div className="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 dark:text-zinc-100 flex items-baseline gap-1">
+                <CountUp to={16} duration={1.8} suffix="+" />
+                <span className="text-sm font-sans text-slate-500 dark:text-zinc-400 font-normal">Tools & Frameworks</span>
+              </div>
+              <p className="text-xs text-slate-600 dark:text-zinc-400 mt-2">
+                Python, FastAPI, RAGs, Supabase, PostgreSQL, Fastify & Docker.
+              </p>
+            </div>
+          </SpotlightCard>
+        </div>
+
+        {/* Grid: Education & Volunteering */}
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20'>
+
+          {/* Education Card */}
+          <SpotlightCard
+            spotlightColor={isDarkMode ? "rgba(251, 191, 36, 0.12)" : "rgba(217, 119, 6, 0.08)"}
+            className="bg-white dark:bg-zinc-900/60 border border-slate-200 dark:border-zinc-800/80 rounded-2xl p-7 sm:p-8 shadow-sm transition-all"
+          >
+            <div className='flex items-center gap-2 mb-6'>
+              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+              <h3 className='font-mono text-xs sm:text-sm tracking-widest text-amber-600 dark:text-amber-400 uppercase font-bold'>EDUCATION</h3>
+            </div>
+
+            <div className='space-y-6'>
+              {educationData.map((edu, index) => (
+                <div key={index}>
+                  <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-3'>
+                    <div>
+                      <h4 className='text-lg font-bold font-mono text-slate-900 dark:text-zinc-100 leading-snug'>{edu.degree}</h4>
+                      <p className='text-sm text-slate-600 dark:text-zinc-400 font-medium'>{edu.institution}</p>
+                    </div>
+                    <span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/25 dark:border-amber-400/25 font-mono text-xs font-semibold text-amber-700 dark:text-amber-400 mt-1 sm:mt-0 shrink-0'>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      {edu.duration}
+                    </span>
+                  </div>
+                  <p className='text-sm text-slate-600 dark:text-zinc-400 mb-4 leading-relaxed font-sans'>{edu.description}</p>
+                  <div className='flex flex-wrap gap-1.5'>
+                    {edu.highlights.map((highlight, idx) => (
+                      <span key={idx} className='px-2.5 py-1 bg-slate-100 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/60 text-slate-700 dark:text-zinc-300 rounded-md text-[11px] font-mono'>
+                        {highlight}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </SpotlightCard>
+
+          {/* Volunteering Card */}
+          <SpotlightCard
+            spotlightColor={isDarkMode ? "rgba(251, 191, 36, 0.12)" : "rgba(217, 119, 6, 0.08)"}
+            className="bg-white dark:bg-zinc-900/60 border border-slate-200 dark:border-zinc-800/80 rounded-2xl p-7 sm:p-8 shadow-sm transition-all"
+          >
+            <div className='flex items-center gap-2 mb-6'>
+              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+              <h3 className='font-mono text-xs sm:text-sm tracking-widest text-amber-600 dark:text-amber-400 uppercase font-bold'>LEADERSHIP & VOLUNTEERING</h3>
+            </div>
+
+            <div className='space-y-6'>
+              {experienceData.map((exp, index) => (
+                <div key={index}>
+                  <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-3'>
+                    <div>
+                      <h4 className='text-lg font-bold font-mono text-slate-900 dark:text-zinc-100 leading-snug'>{exp.role}</h4>
+                      <p className='text-sm text-slate-600 dark:text-zinc-400 font-medium'>{exp.company}</p>
+                    </div>
+                    <span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/25 dark:border-amber-400/25 font-mono text-xs font-semibold text-amber-700 dark:text-amber-400 mt-1 sm:mt-0 shrink-0'>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      {exp.duration}
+                    </span>
+                  </div>
+                  <p className='text-sm text-slate-600 dark:text-zinc-400 mb-4 leading-relaxed font-sans'>{exp.description}</p>
+                  <div className='flex flex-wrap gap-1.5'>
+                    {exp.skills.map((skill, idx) => (
+                      <span key={idx} className='px-2.5 py-1 bg-slate-100 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/60 text-slate-700 dark:text-zinc-300 rounded-md text-[11px] font-mono'>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </SpotlightCard>
+        </div>
+
+        {/* Tech Stack Directory Section */}
+        <div className='mt-24 border-t border-slate-200 dark:border-zinc-800/80 pt-16'>
+          <div className="mb-8 text-center md:text-left flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className='font-mono text-sm sm:text-base tracking-widest text-amber-600 dark:text-amber-400 font-bold uppercase mb-3'
+              >
+                02 / TECH STACK
+              </motion.p>
+              <motion.h3
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className='text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-zinc-100 font-mono'
+              >
+                Tools & technologies.
+              </motion.h3>
+            </div>
+
+            {/* Category Filter Tabs with Count Badges */}
+            <div className="flex flex-wrap gap-1.5 bg-slate-200/60 dark:bg-zinc-900/60 p-1.5 rounded-xl border border-slate-300/60 dark:border-zinc-800/80">
+              {toolCategories.map(cat => {
+                const count = cat.id === 'ALL' ? toolsData.length : toolsData.filter(t => getToolCategory(t.name) === cat.id).length;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`px-3 py-1.5 rounded-lg text-[11px] font-mono font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 ${activeCategory === cat.id
+                        ? 'bg-amber-500 text-zinc-950 shadow-sm'
+                        : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100'
+                      }`}
+                  >
+                    <span>{cat.label}</span>
+                    <span className={`px-1.5 py-0.2 rounded text-[10px] ${activeCategory === cat.id ? 'bg-zinc-950/20 text-zinc-950' : 'bg-slate-300/70 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400'}`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Tools Grid (Centered Big Icons & Text) */}
+          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4'>
+            {filteredTools.map((tool, index) => (
+              <motion.div
+                key={tool.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.25, delay: index * 0.02 }}
+                className="w-full"
+              >
+                <SpotlightCard
+                  spotlightColor={isDarkMode ? "rgba(251, 191, 36, 0.18)" : "rgba(217, 119, 6, 0.12)"}
+                  className='w-full h-full p-4 bg-white dark:bg-zinc-900/70 border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm hover:border-amber-500/50 dark:hover:border-amber-400/50 transition-all duration-200 group flex flex-col items-center justify-center text-center cursor-default hover:-translate-y-0.5'
+                >
+                  <div className="relative w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center overflow-hidden shrink-0 mb-2.5">
+                    <Image
+                      src={tool.logo}
+                      alt={tool.name}
+                      fill
+                      sizes="48px"
+                      className='object-contain transition-transform group-hover:scale-110 duration-200'
+                    />
+                  </div>
+                  <span className='font-mono text-[11px] font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors text-center truncate max-w-full'>
+                    {tool.name}
+                  </span>
+                </SpotlightCard>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </ClickSpark>
   )
 }
 
