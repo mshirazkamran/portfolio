@@ -10,6 +10,7 @@ const Contact = ({ isDarkMode }) => {
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const shouldReduceMotion = useReducedMotion();
 
@@ -38,15 +39,36 @@ const Contact = ({ isDarkMode }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    setSubmitError('');
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "aca76711-8064-4fdb-b9a7-2b65cfda7a09",
+          ...formData,
+        }),
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setIsSubmitted(false), 6000);
+      } else {
+        console.error("Web3Forms error", data);
+        setSubmitError(data.message || "Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      console.error("Request failed", err);
+      setSubmitError("Request failed (network error or blocked by an extension). Please try again or email me directly.");
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setIsSubmitted(false), 6000);
-    }, 700);
+    }
   };
 
   return (
@@ -167,6 +189,15 @@ const Contact = ({ isDarkMode }) => {
                   <span className="font-mono text-xs">Thank you for reaching out. I will review your message and reply back shortly.</span>
                 </div>
               </motion.div>
+            )}
+
+            {submitError && (
+              <div
+                role="alert"
+                className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-700 dark:text-red-400 font-mono text-xs"
+              >
+                {submitError}
+              </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
