@@ -10,23 +10,29 @@ const Contact = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     setResult("Sending....");
-    const formData = new FormData(event.target);
+    const form = event.target;
+    const formData = new FormData(form);
 
     formData.append("access_key", "aca76711-8064-4fdb-b9a7-2b65cfda7a09");
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
-      setResult("Form Submitted Successfully");
-      event.target.reset();
-    } else {
-      console.log("Error", data);
-      setResult(data.message);
+      if (data.success) {
+        setResult("Form Submitted Successfully");
+        form.reset();
+      } else {
+        console.log("Error", data);
+        setResult(data.message);
+      }
+    } catch (error) {
+      console.log("Request failed", error);
+      setResult("Request failed (network error or blocked by an extension). Check the console.");
     }
   };
 
@@ -78,7 +84,7 @@ const Contact = () => {
             transition={{ delay: 1.2, duration: 0.6 }}
 
 
-            type='text' placeholder='Enter your e-mail' required
+            type='email' placeholder='Enter your e-mail' required
             className='flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-darkHover/30 dark:border-white/90' name='email' />
         </div>
         <motion.textarea
